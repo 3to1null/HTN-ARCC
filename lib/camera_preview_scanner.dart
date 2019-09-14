@@ -38,15 +38,16 @@ class _HomeCameraViewState extends State<HomeCameraView> {
     _camera = CameraController(
       description,
       ResolutionPreset.ultraHigh,
-      enableAudio: false
+      enableAudio: false,
     );
     await _camera.initialize();
 
     _camera.startImageStream((CameraImage image) {
       if (_isDetecting) return;
       _frameCounter++;
-      if (_frameCounter != 1){
-        if(_frameCounter == 5){
+
+      if (_frameCounter != 1) {
+        if (_frameCounter == 5) {
           _frameCounter = 0;
         }
         return;
@@ -55,26 +56,14 @@ class _HomeCameraViewState extends State<HomeCameraView> {
 
       ScannerUtils.detect(
         image: image,
-        detectInImage: _getDetectionMethod(),
+        detectInImage: _recognizer.processImage,
         imageRotation: description.sensorOrientation,
       ).then(
         (dynamic results) {
-          if (_currentDetector == null) return;
-          setState(() {
-            _scanResults = results;
-          });
+          if (_currentDetector != null) setState(() => _scanResults = results);
         },
       ).whenComplete(() => _isDetecting = false);
     });
-  }
-
-  Future<dynamic> Function(FirebaseVisionImage image) _getDetectionMethod() {
-    switch (_currentDetector) {
-      case Detector.text:
-        return _recognizer.processImage;
-    }
-
-    return null;
   }
 
   Widget _buildResults() {
@@ -94,7 +83,8 @@ class _HomeCameraViewState extends State<HomeCameraView> {
     switch (_currentDetector) {
       default:
         if (_scanResults is! VisionText) return noResultsText;
-        return CustomPaint(painter: TextDetectorPainter(imageSize, _scanResults));
+        return CustomPaint(
+            painter: TextDetectorPainter(imageSize, _scanResults));
     }
   }
 
@@ -125,10 +115,7 @@ class _HomeCameraViewState extends State<HomeCameraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: <Widget>[
-          _buildImage(),
-          BottomUI()
-        ],
+        children: <Widget>[_buildImage(), BottomUI()],
       ),
     );
   }
