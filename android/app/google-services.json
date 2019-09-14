@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "556016003227",
+    "firebase_url": "https://hackthenorth-fbf8f.firebaseio.com",
+    "project_id": "hackthenorth-fbf8f",
+    "storage_bucket": "hackthenorth-fbf8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556016003227:android:db5f5e72a9bce23ec2fe3e",
+        "android_client_info": {
+          "package_name": "me.fraignt.ar_cc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556016003227-cu4depm0rti3du1lsefei36sdh5v4p6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4wjJT8DPd9iDY1ZgvgIKfbiBJ6sj2SD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556016003227-cu4depm0rti3du1lsefei36sdh5v4p6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
