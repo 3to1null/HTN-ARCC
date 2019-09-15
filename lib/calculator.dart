@@ -70,27 +70,58 @@ class _CalculatorState extends State<Calculator> {
               ],
             ),
           ),
-          Wrap(
-            children: List<Widget>.generate(
-              3,
-              (int index) {
-                return ChoiceChip(
-                  label: Text('Item $index'),
-                  selected: _value == index,
-                  onSelected: (bool selected) {
-                    setState(() {
-                      _value = selected ? index : null;
-                    });
-                  },
-                );
-              },
-            ).toList(),
-          ),
+          Padding(padding: EdgeInsets.only(top: 30)),
+          _buildTimeScaleButtons(),
           RatesChart(),
         ],
       ),
     );
   }
+
+  _buildTimeScaleButtons() => Wrap(
+        spacing: 20,
+        children: [
+          ChoiceChip(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            selectedColor: Color(0xFF1CD0A2),
+            labelStyle:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+            label: Text('DAY'),
+            selected: _value == 0,
+            onSelected: (bool selected) {
+              setState(() {
+                _value = selected ? 0 : null;
+              });
+            },
+          ),
+          ChoiceChip(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            selectedColor: Color(0xFF1CD0A2),
+            labelStyle:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+            label: Text('MON'),
+            selected: _value == 1,
+            onSelected: (bool selected) {
+              setState(() {
+                _value = selected ? 1 : null;
+              });
+            },
+          ),
+          ChoiceChip(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            selectedColor: Color(0xFF1CD0A2),
+            labelStyle:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+            label: Text('YEAR'),
+            selected: _value == 2,
+            onSelected: (bool selected) {
+              setState(() {
+                _value = selected ? 2 : null;
+              });
+            },
+          ),
+        ],
+      );
 
   _buildInputField() => TextField(
         keyboardType: TextInputType.number,
