@@ -5,7 +5,9 @@ import 'search/country.dart';
 import 'search/countries.dart';
 import 'search/utils/utils.dart';
 
-Map<String, Country> _selectedCountries = {'c1': countryList[0], 'c2': countryList[1]};
+import 'functions/conversion_rates.dart';
+
+Map<String, Country> selectedCountriesShared = {'c1': countryList[0], 'c2': countryList[1]};
 
 
   Widget _buildDialogItem(Country country) => Row(
@@ -55,7 +57,7 @@ class CurrencyPicker extends StatefulWidget {
 }
 
 class _CurrencyPickerState extends State<CurrencyPicker> {
-  Map<String, Country> selectedCountries = _selectedCountries;
+  Map<String, Country> selectedCountries = selectedCountriesShared;
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +80,11 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
                 isSearchable: true,
                 title: Text( widget.isC1 ? 'Select input currency' : 'Select output currency'),
                 onValuePicked: (Country country){
-                  _selectedCountries[widget.isC1 ? 'c1' : 'c2'] = country;
+                  selectedCountriesShared[widget.isC1 ? 'c1' : 'c2'] = country;
                   setState(() {
-                    selectedCountries = _selectedCountries;
+                    selectedCountries = selectedCountriesShared;
                   });
+                  updateConversionRates(selectedCountriesShared['c1'].short, selectedCountriesShared['c2'].short);
                 },
                 itemBuilder: _buildDialogItem)),
       );

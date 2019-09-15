@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'functions/currencies.dart';
 import 'functions/conversion_rates.dart';
 
+import 'search.dart';
+
 enum Detector { text }
 
 
@@ -94,9 +96,9 @@ class TextDetectorPainter extends CustomPainter {
 
           try{
             money = double.parse(text);
-            money = calculateConverted('USD', 'EUR', money);
+            money = calculateConverted(selectedCountriesShared['c1'].short, selectedCountriesShared['c2'].short, money);
             canvas.drawRect(scaleRect(element), paint);
-            drawText(element, canvas, formatMoney('EUR', money));
+            drawText(element, canvas, formatMoney(selectedCountriesShared['c2'].short, money));
           }catch(e){}
         }
       }
