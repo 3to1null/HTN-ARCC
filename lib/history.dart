@@ -22,7 +22,7 @@ class HistoryPage extends StatelessWidget {
               onTap: () => Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => SavedItem())),
               title: Text(
-                "Alcohol LA Prices",
+                itemCount == 0 ? "Bakery Prices in NY" :  itemCount == 1 ? "Walmart Cakes" : itemCount == 2 ? "Starbucks Frappe" : itemCount == 3 ? "Different Strokes": "Prices Waterloo Store",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
@@ -34,14 +34,14 @@ class HistoryPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "USD -> MUR",
+                      "USD -> EUR",
                       style: TextStyle(fontSize: 15),
                     ),
                     Padding(
                       padding: EdgeInsets.all(2),
                     ),
                     Text(
-                      "17/08/19",
+                      "27/08/19",
                       style: TextStyle(fontSize: 15),
                     ),
                   ],

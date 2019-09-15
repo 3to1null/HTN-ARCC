@@ -10,6 +10,7 @@ void main() {
   runApp(
     MaterialApp(
       theme: ThemeData(fontFamily: 'Poppins'),
+      debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => HomeCameraView(),
       },

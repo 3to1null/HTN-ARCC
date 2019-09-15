@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'charts.dart';
+import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
 class Calculator extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class _CalculatorState extends State<Calculator> {
   final TextEditingController inputController = TextEditingController();
   final valueStyle =
       TextStyle(color: Colors.white, fontWeight: FontWeight.w200, fontSize: 50);
+
+  int _value = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +70,22 @@ class _CalculatorState extends State<Calculator> {
               ],
             ),
           ),
-
+          Wrap(
+            children: List<Widget>.generate(
+              3,
+              (int index) {
+                return ChoiceChip(
+                  label: Text('Item $index'),
+                  selected: _value == index,
+                  onSelected: (bool selected) {
+                    setState(() {
+                      _value = selected ? index : null;
+                    });
+                  },
+                );
+              },
+            ).toList(),
+          ),
           RatesChart(),
         ],
       ),
