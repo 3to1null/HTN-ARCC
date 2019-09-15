@@ -89,13 +89,15 @@ class _HomeCameraViewState extends State<HomeCameraView> {
   Widget build(BuildContext context) {
     bool _isCameraInitialised = _camera == null;
 
-    Widget loadingScreen = const Center(
-      child: Text(
-        'Initializing Camera...',
-        style: TextStyle(
-          color: Colors.green,
-          fontSize: 30.0,
-        ),
+    Widget loadingScreen = Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image(
+            width: 200.0,
+            image: AssetImage('assets/images/logo.png'),
+          )
+        ],
       ),
     );
 
