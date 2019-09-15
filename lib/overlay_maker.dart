@@ -7,6 +7,8 @@ import 'dart:ui' as ui;
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 
+import 'currencies.dart';
+
 enum Detector { text }
 
 class TextOverlayMaker extends StatelessWidget {
@@ -121,8 +123,23 @@ class TextDetectorPainter extends CustomPainter {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
           num money;
+          String text = element.text.replaceFirst(',', '.');
           try{
-            money = double.parse(element.text);
+
+            String c1;
+            for(Map<String, String> currency in getCurrencies()){
+              if(text.startsWith(currency['symbol'])){
+                c1 = currency['short'];
+                text = text.substring(1);
+                break;
+              }else if(text.endsWith(currency['symbol'])){
+                c1 = currency['short'];
+                text = text.substring(0, text.length - 1);
+                break;
+              }
+            }
+
+            money = double.parse(text);
             // TODO: Actually implement the conversion.
             canvas.drawRect(scaleRect(element), paint);
             drawText(element, canvas, money);
