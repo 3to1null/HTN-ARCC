@@ -7,66 +7,11 @@ import 'dart:ui' as ui;
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 
-import 'currencies.dart';
+import 'functions/currencies.dart';
+import 'functions/conversion_rates.dart';
 
 enum Detector { text }
 
-class TextOverlayMaker extends StatelessWidget {
-  TextOverlayMaker(this.absoluteImageSize, this.visionText);
-
-  final Size absoluteImageSize;
-  final VisionText visionText;
-
-  
-
-  Widget _createOverlay(BuildContext context, TextContainer container){
-    final double scaleX = absoluteImageSize.width / MediaQuery.of(context).size.width;
-    final double scaleY = absoluteImageSize.height / MediaQuery.of(context).size.height;
-    num money;
-
-    try{
-       money = double.parse(container.text);
-    }catch(e){
-      return null;
-    }
-    
-    if(money == null){
-      return null;
-    }
-
-    return Positioned(
-      left: container.boundingBox.left * scaleX,
-      top: container.boundingBox.top * scaleY,
-      right: container.boundingBox.right * scaleX,
-      bottom: container.boundingBox.bottom * scaleY,
-      child: Container(
-        decoration: BoxDecoration(color: Colors.black),
-        child: Text(money.toString(), style: TextStyle(color: Colors.white),),
-      ),
-    );
-  }
-
-  List<Widget> _createChildren(BuildContext context){
-    List<Widget> childlist = [];
-    for (TextBlock block in visionText.blocks) {
-      for (TextLine line in block.lines) {
-        for (TextElement element in line.elements) {
-          if(_createOverlay(context, element) != null){
-            childlist.add( _createOverlay(context, element));
-          }
-        }
-      }
-    }
-    return childlist;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: _createChildren(context),
-    );
-  }
-}
 
 // Paints rectangles around all the text in the image.
 class TextDetectorPainter extends CustomPainter {
@@ -87,23 +32,24 @@ class TextDetectorPainter extends CustomPainter {
       return Rect.fromLTRB(
         container.boundingBox.left * scaleX,
         container.boundingBox.top * scaleY,
-        container.boundingBox.right * scaleX,
+        container.boundingBox.right * scaleX + 15,
         container.boundingBox.bottom * scaleY,
       );
     }
 
-    dynamic drawText(TextContainer container, canvas, num money){
+    dynamic drawText(TextContainer container, canvas, String money){
       final textStyle = TextStyle(
         color: Colors.white,
-        fontSize: container.boundingBox.height / 2,
+        fontSize: container.boundingBox.height / 2.3,
       );
       final textSpan = TextSpan(
-        text: money.toString(),
+        text: money,
         style: textStyle,
       );
       final textPainter = TextPainter(
         text: textSpan,
         textDirection: TextDirection.ltr,
+        textAlign: TextAlign.center
       );
       textPainter.layout(
         minWidth: 0,
@@ -127,7 +73,7 @@ class TextDetectorPainter extends CustomPainter {
           try{
 
             String c1;
-            for(Map<String, String> currency in getCurrencies()){
+            for(Map<String, String> currency in getCurrenciesSync()){
               if(text.startsWith(currency['symbol'])){
                 c1 = currency['short'];
                 text = text.substring(1);
@@ -140,9 +86,9 @@ class TextDetectorPainter extends CustomPainter {
             }
 
             money = double.parse(text);
-            // TODO: Actually implement the conversion.
+            money = calculateConverted('USD', 'CAD', money);
             canvas.drawRect(scaleRect(element), paint);
-            drawText(element, canvas, money);
+            drawText(element, canvas, formatMoney('EUR', money));
           }catch(e){}
         }
       }
