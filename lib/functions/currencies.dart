@@ -1,3 +1,6 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 List<Map<String, String>> _currencies = [
     {'short': 'USD', 'long': 'United States Dollar', 'symbol': '\$', 'flag': 'https://www.countryflags.io/us/flat/64.png'},
     {'short': 'CAD', 'long': 'Canadian Dollar', 'symbol': '\$', 'flag': 'https://www.countryflags.io/ca/flat/64.png'},
@@ -5,8 +8,10 @@ List<Map<String, String>> _currencies = [
   ];
 
 
-List<Map<String, String>> getCurrenciesAsync(){
-  //todo api
+Future<List<Map<String, String>>> getCurrenciesAsync() async {
+  var url = "http://10.33.133.205:5000/api/currencies";
+  var response = await http.get(url);
+  _currencies = json.decode(response.body);
   return _currencies;
 }
 
