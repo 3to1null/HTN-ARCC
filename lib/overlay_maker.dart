@@ -69,7 +69,18 @@ class TextDetectorPainter extends CustomPainter {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
           num money;
-          String text = element.text.replaceFirst(',', '.');
+          // String text = element.text.replaceFirst(',', '.'); //EU support? Based on locale?
+          String text = element.text;
+
+          //Probably not money
+          if(text.length >= 5 && !(text.contains('.') || text.contains(','))){
+            break;
+          }else if(element.boundingBox.height < 20){
+            break;
+          }else if(text.split('.').last.length != 2){
+            break;
+          }
+
           try{
 
             String c1;
