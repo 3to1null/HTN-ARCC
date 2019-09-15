@@ -66,7 +66,7 @@ class _HomeCameraViewState extends State<HomeCameraView> {
     });
   }
 
-  Widget _buildResults() {
+  Widget _buildARResults() {
     const Text noResultsText = Text('No results!');
 
     if (_scanResults == null ||
@@ -88,35 +88,31 @@ class _HomeCameraViewState extends State<HomeCameraView> {
     }
   }
 
-  Widget _buildImage() {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      child: _camera == null
-          ? const Center(
-              child: Text(
-                'Initializing Camera...',
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 30.0,
-                ),
-              ),
-            )
-          : Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                CameraPreview(_camera),
-                _buildResults(),
-              ],
-            ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[_buildImage(), BottomUI()],
+    bool _isCameraInitialised = _camera == null;
+
+    Widget loadingScreen = const Center(
+      child: Text(
+        'Initializing Camera...',
+        style: TextStyle(
+          color: Colors.green,
+          fontSize: 30.0,
+        ),
       ),
+    );
+
+    Widget homePage = Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        CameraPreview(_camera),
+        HomeButtonsRow(),
+        _buildARResults(),
+      ],
+    );
+
+    return Scaffold(
+      body: Container(child: _isCameraInitialised ? loadingScreen : homePage),
     );
   }
 
