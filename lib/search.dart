@@ -75,7 +75,7 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
             data: Theme.of(context).copyWith(primaryColor: Colors.pink),
             child: CountryPickerDialog(
                 titlePadding: EdgeInsets.all(8.0),
-                searchCursorColor: Colors.pinkAccent,
+                searchCursorColor: Color(0xFF1CD0A2),
                 searchInputDecoration: InputDecoration(hintText: 'Search...'),
                 isSearchable: true,
                 title: Text( widget.isC1 ? 'Select input currency' : 'Select output currency'),
