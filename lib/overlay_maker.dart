@@ -94,7 +94,7 @@ class TextDetectorPainter extends CustomPainter {
 
           try{
             money = double.parse(text);
-            money = calculateConverted('USD', 'CAD', money);
+            money = calculateConverted('USD', 'EUR', money);
             canvas.drawRect(scaleRect(element), paint);
             drawText(element, canvas, formatMoney('EUR', money));
           }catch(e){}
