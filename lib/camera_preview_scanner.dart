@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 
+import 'search.dart';
 import 'overlay_maker.dart';
 import 'scanner_utils.dart';
 import 'home_ui.dart';
@@ -104,6 +105,7 @@ class _HomeCameraViewState extends State<HomeCameraView> {
         CameraPreview(_camera),
         _buildARResults(),
         HomeButtonsRow(),
+        SearchBar(),
       ],
     );
 
