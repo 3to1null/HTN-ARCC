@@ -97,6 +97,7 @@ class _CalculatorState extends State<Calculator> {
           Column(
             children: <Widget>[
               _buildTimeScaleButtons(),
+
               RatesChart(),
             ],
           )
