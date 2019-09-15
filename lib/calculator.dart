@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
+import 'search/country_picker_dialog.dart';
+import 'search/country.dart';
+import 'search/countries.dart';
+import 'search/utils/utils.dart';
 import 'charts.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
+
+import 'functions/conversion_rates.dart';
+import 'functions/currencies.dart';
+
+Map<String, Country> selectedCountriesShared = {'c1': countryList[0], 'c2': countryList[1]};
+
+
+  Widget _buildDialogItem(Country country) => Row(
+        children: <Widget>[
+          CountryPickerUtils.getDefaultFlagImage(country),
+          SizedBox(width: 8.0),
+          Text(country.short),
+          SizedBox(width: 8.0),
+          Flexible(child: Text(country.long))
+        ],
+      );
 
 class Calculator extends StatefulWidget {
   @override
@@ -13,12 +33,15 @@ class _CalculatorState extends State<Calculator> {
   final TextEditingController inputController = TextEditingController();
   final valueStyle =
       TextStyle(color: Colors.white, fontWeight: FontWeight.w200, fontSize: 50);
+    Map<String, Country> selectedCountries = selectedCountriesShared;
+  String c2 = "";
 
   int _value = 0;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
 
     final _appBar = AppBar(
       backgroundColor: Colors.teal,
@@ -96,19 +119,22 @@ class _CalculatorState extends State<Calculator> {
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         controller: inputController,
-        onSubmitted: (String amnt) {
-          inputController.text = amnt;
-          // * Do your conversion stuff here.
+        onChanged: (String amnt) {
+          // inputController.text = amnt;
+          double newa = calculateConverted(selectedCountries['c1'].short, selectedCountries['c2'].short, double.parse(amnt));
+          setState(() {
+            c2 = newa.toStringAsFixed(2);
+          });
         },
         decoration: InputDecoration(
           hintText: "00.00",
           hintStyle: valueStyle.copyWith(color: Colors.white.withOpacity(0.80)),
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: Colors.white, width: 1.0, style: BorderStyle.solid)),
+                  color: Colors.transparent, width: 1.0, style: BorderStyle.solid)),
           enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: Colors.white, width: 1.0, style: BorderStyle.solid)),
+                  color: Colors.transparent, width: 1.0, style: BorderStyle.solid)),
         ),
         style: valueStyle,
       );
@@ -117,13 +143,34 @@ class _CalculatorState extends State<Calculator> {
         children: <Widget>[
           InkWell(
             onTap: () {
-              // * Add your currency switching magic here.
+              showDialog(
+                context: context,
+                builder: (context) => Theme(
+                    data: Theme.of(context).copyWith(primaryColor: Colors.pink),
+                    child: CountryPickerDialog(
+                        titlePadding: EdgeInsets.all(8.0),
+                        searchCursorColor: Color(0xFF1CD0A2),
+                        searchInputDecoration: InputDecoration(hintText: 'Search...'),
+                        isSearchable: true,
+                        title: Text('Select output currency'),
+                        onValuePicked: (Country country){
+                          selectedCountriesShared['c1'] = country;
+                          setState(() {
+                            selectedCountries = selectedCountriesShared;
+                          });
+                          updateConversionRates(selectedCountriesShared['c1'].short, selectedCountriesShared['c2'].short);
+                        },
+                        itemBuilder: _buildDialogItem)),
+              );
             },
             child: Row(
               children: <Widget>[
-                Text(
-                  "USD",
-                  style: currencyStyle,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    selectedCountries['c1'].short,
+                    style: currencyStyle,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -137,7 +184,7 @@ class _CalculatorState extends State<Calculator> {
           ),
           Container(
             width: 150,
-            height: 55,
+            height: 70,
             child: _buildInputField(),
           ),
         ],
@@ -147,12 +194,30 @@ class _CalculatorState extends State<Calculator> {
         children: <Widget>[
           InkWell(
             onTap: () {
-              // * Add your currency switching magic here
+              showDialog(
+                context: context,
+                builder: (context) => Theme(
+                    data: Theme.of(context).copyWith(primaryColor: Colors.pink),
+                    child: CountryPickerDialog(
+                        titlePadding: EdgeInsets.all(8.0),
+                        searchCursorColor: Color(0xFF1CD0A2),
+                        searchInputDecoration: InputDecoration(hintText: 'Search...'),
+                        isSearchable: true,
+                        title: Text('Select output currency'),
+                        onValuePicked: (Country country){
+                          selectedCountriesShared['c2'] = country;
+                          setState(() {
+                            selectedCountries = selectedCountriesShared;
+                          });
+                          updateConversionRates(selectedCountriesShared['c1'].short, selectedCountriesShared['c2'].short);
+                        },
+                        itemBuilder: _buildDialogItem)),
+              );
             },
             child: Row(
               children: <Widget>[
                 Text(
-                  "POL",
+                  selectedCountries['c2'].short,
                   style: currencyStyle,
                 ),
                 Padding(
@@ -166,7 +231,7 @@ class _CalculatorState extends State<Calculator> {
             ),
           ),
           Text(
-            "69.00",
+            c2,
             style: valueStyle,
           )
         ],
