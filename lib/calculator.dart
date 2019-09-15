@@ -156,12 +156,12 @@ class _CalculatorState extends State<Calculator> {
         textAlign: TextAlign.center,
         controller: inputController,
         onChanged: (String amnt) {
-          // inputController.text = amnt;
-          double newa = calculateConverted(selectedCountries['c1'].short,
-              selectedCountries['c2'].short, double.parse(amnt));
-          setState(() {
-            c2 = newa.toStringAsFixed(2);
-          });
+          double newa = calculateConverted(selectedCountries['c1'].short, selectedCountries['c2'].short, double.parse(amnt));
+          if(newa != null){
+            setState(() {
+              c2 = newa.toStringAsFixed(2);
+            });
+          }
         },
         decoration: InputDecoration(
           hintText: "00.00",
@@ -199,6 +199,7 @@ class _CalculatorState extends State<Calculator> {
                           selectedCountriesShared['c1'] = country;
                           setState(() {
                             selectedCountries = selectedCountriesShared;
+                            c2 = "";
                           });
                           updateConversionRates(
                               selectedCountriesShared['c1'].short,
@@ -253,6 +254,7 @@ class _CalculatorState extends State<Calculator> {
                           selectedCountriesShared['c2'] = country;
                           setState(() {
                             selectedCountries = selectedCountriesShared;
+                            c2 = "";
                           });
                           updateConversionRates(
                               selectedCountriesShared['c1'].short,
