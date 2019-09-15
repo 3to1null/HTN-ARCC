@@ -102,8 +102,8 @@ class _HomeCameraViewState extends State<HomeCameraView> {
       fit: StackFit.expand,
       children: <Widget>[
         CameraPreview(_camera),
-        HomeButtonsRow(),
         _buildARResults(),
+        HomeButtonsRow(),
       ],
     );
 

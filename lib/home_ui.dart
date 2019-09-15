@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'history.dart';
 
 class HomeButtonsRow extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class HomeButtonsRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            _historyButton(),
+            _historyButton(context),
             _camButton(),
             _calculatorButton(),
           ],
@@ -19,13 +20,17 @@ class HomeButtonsRow extends StatelessWidget {
     );
   }
 
-  _historyButton() => IconButton(
+  Widget _historyButton(BuildContext context) => IconButton(
         icon: Icon(
           Icons.history,
           color: Colors.white,
           size: 35,
         ),
-        onPressed: () {},
+        onPressed: () {
+          print("object");
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => HistoryPage()));
+        },
       );
   _camButton() => RawMaterialButton(
         onPressed: () {},

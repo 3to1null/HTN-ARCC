@@ -9,6 +9,7 @@ import 'camera_preview_scanner.dart';
 void main() {
   runApp(
     MaterialApp(
+      theme: ThemeData(fontFamily: 'Poppins'),
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => HomeCameraView(),
       },
