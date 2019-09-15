@@ -70,20 +70,9 @@ class TextDetectorPainter extends CustomPainter {
         for (TextElement element in line.elements) {
           num money;
           // String text = element.text.replaceFirst(',', '.'); //EU support? Based on locale?
-          String text = element.text;
+          String text = element.text.replaceAll(',', '');
 
-          //Probably not money
-          if(text.length >= 5 && !(text.contains('.') || text.contains(','))){
-            break;
-          }else if(element.boundingBox.height < 20){
-            break;
-          }else if(text.split('.').last.length != 2){
-            break;
-          }
-
-          try{
-
-            String c1;
+          String c1;
             for(Map<String, String> currency in getCurrenciesSync()){
               if(text.startsWith(currency['symbol'])){
                 c1 = currency['short'];
@@ -94,8 +83,16 @@ class TextDetectorPainter extends CustomPainter {
                 text = text.substring(0, text.length - 1);
                 break;
               }
-            }
+          }
 
+          //Probably not money
+          if(text.length >= 5 && !(text.contains('.') || text.contains(','))){
+            break;
+          }else if(element.boundingBox.height < 16){
+            break;
+          }
+
+          try{
             money = double.parse(text);
             money = calculateConverted('USD', 'CAD', money);
             canvas.drawRect(scaleRect(element), paint);
