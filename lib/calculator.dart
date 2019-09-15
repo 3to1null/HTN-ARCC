@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'charts.dart';
 
 class Calculator extends StatefulWidget {
   @override
@@ -50,6 +51,7 @@ class _CalculatorState extends State<Calculator> {
     return Scaffold(
       appBar: _appBar,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -65,6 +67,8 @@ class _CalculatorState extends State<Calculator> {
               ],
             ),
           ),
+
+          RatesChart(),
         ],
       ),
     );
