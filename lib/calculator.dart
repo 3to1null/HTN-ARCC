@@ -54,18 +54,18 @@ class Calculator extends StatelessWidget {
                       "USD",
                       style: currencyStyle,
                     ),
-                    TextField(
-                      cursorColor: Colors.white,
-                      controller: inputController,
-                      decoration: InputDecoration(
-                          labelText: "Hello",
-                          labelStyle: theme.textTheme.caption
-                              .copyWith(color: Colors.white),),
-                    ), // ! Not working
-                    // Text(
-                    //   "69.00",
-                    //   style: valueStyle,
-                    // )
+                    // TextField(
+                    //   cursorColor: Colors.white,
+                    //   controller: inputController,
+                    //   decoration: InputDecoration(
+                    //       labelText: "Hello",
+                    //       labelStyle: theme.textTheme.caption
+                    //           .copyWith(color: Colors.white),),
+                    // ), // ! Not working
+                    Text(
+                      "69.00",
+                      style: valueStyle,
+                    )
                     // Add rest of currency 1 widgets
                   ],
                 ),
