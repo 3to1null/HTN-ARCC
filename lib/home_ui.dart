@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'history.dart';
+import 'calculator.dart';
 
 class HomeButtonsRow extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class HomeButtonsRow extends StatelessWidget {
           children: <Widget>[
             _historyButton(context),
             _camButton(),
-            _calculatorButton(),
+            _calculatorButton(context),
           ],
         ),
       ),
@@ -45,12 +46,14 @@ class HomeButtonsRow extends StatelessWidget {
         padding: const EdgeInsets.all(35.0),
       );
 
-  _calculatorButton() => IconButton(
+  _calculatorButton(context) => IconButton(
         icon: Icon(
           Icons.equalizer,
           color: Colors.white,
           size: 35,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => Calculator()));
+        },
       );
 }

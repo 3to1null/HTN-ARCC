@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'saved_item.dart';
 
 class HistoryPage extends StatelessWidget {
   int itemCount = 20;
@@ -6,6 +7,8 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget sampleTile = ListTile(
       // contentPadding: EdgeInsets.all(15),
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => SavedItem())),
       title: Text(
         "Alcohol LA Prices",
         style: TextStyle(fontWeight: FontWeight.w500),
@@ -23,22 +26,22 @@ class HistoryPage extends StatelessWidget {
       ),
     );
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.teal,
-          centerTitle: true,
-          title: Text(
-            "History",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          appBar: AppBar(
+            backgroundColor: Colors.teal,
+            centerTitle: true,
+            title: Text(
+              "History",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            // actions: <Widget>[
+            //   IconButton(
+            //     icon: Icon(Icons.more_vert),
+            //     onPressed: () {
+            //       // implement
+            //     },
+            //   )
+            // ],
           ),
-          // actions: <Widget>[
-          //   IconButton(
-          //     icon: Icon(Icons.more_vert),
-          //     onPressed: () {
-          //       // implement
-          //     },
-          //   )
-          // ],
-        ),
         body: ListView.separated(
           padding: EdgeInsets.symmetric(vertical: 10),
           separatorBuilder: (_, int no) => Divider(),
