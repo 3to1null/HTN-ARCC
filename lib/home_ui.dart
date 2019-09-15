@@ -42,7 +42,7 @@ class HomeButtonsRow extends StatelessWidget {
           ),
         ),
         elevation: 2.0,
-        fillColor: Colors.green,
+        fillColor: Color(0xFF1CD0A2),
         padding: const EdgeInsets.all(35.0),
       );
 
