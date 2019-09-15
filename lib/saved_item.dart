@@ -4,15 +4,10 @@ class SavedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DecoratedBox(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('assets/images/image.png'),
-        // ...
-      ),
-      // ...
-    ),
-  ),
+        appBar: AppBar(
+          title: Text("Image from assets"),
+        ),
+        body: Image.asset('assets/images/lake.jpg'), //   <--- image here
     );
   }
 }
