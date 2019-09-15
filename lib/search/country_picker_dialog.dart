@@ -182,8 +182,8 @@ class SingleChoiceDialogState extends State<CountryPickerDialog> {
         setState(() {
           _filteredCountries = _allCountries
               .where((Country country) =>
-                  country.long.toLowerCase().startsWith(value.toLowerCase()) ||
-                  country.short.startsWith(value))
+                  country.long.toLowerCase().contains(value.toLowerCase()) ||
+                  country.short.toLowerCase().contains(value.toLowerCase()))
               .toList();
         });
       },
