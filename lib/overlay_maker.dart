@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:ui' as ui;
+import 'dart:math';
 
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
@@ -33,16 +34,16 @@ class TextDetectorPainter extends CustomPainter {
     Rect scaleRect(TextContainer container) {
       return Rect.fromLTRB(
         container.boundingBox.left * scaleX,
-        container.boundingBox.top * scaleY,
+        container.boundingBox.top * scaleY - 5,
         container.boundingBox.right * scaleX + 20,
-        container.boundingBox.bottom * scaleY,
+        container.boundingBox.bottom * scaleY + 5,
       );
     }
 
     dynamic drawText(TextContainer container, canvas, String money){
       final textStyle = TextStyle(
         color: Colors.white,
-        fontSize: container.boundingBox.height / 2.3,
+        fontSize: max(12.0, container.boundingBox.height / 2),
       );
       final textSpan = TextSpan(
         text: money,
@@ -65,7 +66,7 @@ class TextDetectorPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
       ..style = PaintingStyle.fill
-      ..colorFilter = ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop);
+      ..colorFilter = ColorFilter.mode(Colors.black.withOpacity(0.75), BlendMode.dstATop);
 
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
@@ -87,10 +88,10 @@ class TextDetectorPainter extends CustomPainter {
               }
           }
 
-          //Probably not money
+          // Probably not money
           if(text.length >= 5 && !(text.contains('.') || text.contains(','))){
             break;
-          }else if(element.boundingBox.height < 16){
+          }else if(element.boundingBox.height < 5){
             break;
           }
 
