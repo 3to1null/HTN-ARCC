@@ -4,9 +4,15 @@ class SavedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Photo goes here"),
+      body: DecoratedBox(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage('assets/image.png'),
+        // ...
       ),
+      // ...
+    ),
+  ),
     );
   }
 }
