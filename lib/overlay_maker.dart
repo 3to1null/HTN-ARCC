@@ -34,7 +34,7 @@ class TextDetectorPainter extends CustomPainter {
       return Rect.fromLTRB(
         container.boundingBox.left * scaleX,
         container.boundingBox.top * scaleY,
-        container.boundingBox.right * scaleX + 15,
+        container.boundingBox.right * scaleX + 20,
         container.boundingBox.bottom * scaleY,
       );
     }
@@ -97,6 +97,7 @@ class TextDetectorPainter extends CustomPainter {
           try{
             money = double.parse(text);
             money = calculateConverted(selectedCountriesShared['c1'].short, selectedCountriesShared['c2'].short, money);
+            print(formatMoney(selectedCountriesShared['c2'].short, money));
             canvas.drawRect(scaleRect(element), paint);
             drawText(element, canvas, formatMoney(selectedCountriesShared['c2'].short, money));
           }catch(e){}

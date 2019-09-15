@@ -23,10 +23,9 @@ String formatMoney(String c2, double a){
   for(Map<String, String> currency in getCurrenciesSync()){
     if(currency['short'] == c2){
       if(currency['symbol'] != null){
-        return currency['symbol'] + a.toStringAsFixed(2);
+        return currency['symbol'] + " " + a.toStringAsFixed(2);
       }
-      return a.toStringAsFixed(2) + currency['short'];
     }
   }
-  return null;
+  return a.toStringAsFixed(2) + c2;
 }
