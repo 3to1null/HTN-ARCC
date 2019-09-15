@@ -9,18 +9,20 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'functions/conversion_rates.dart';
 import 'functions/currencies.dart';
 
-Map<String, Country> selectedCountriesShared = {'c1': countryList[0], 'c2': countryList[1]};
+Map<String, Country> selectedCountriesShared = {
+  'c1': countryList[0],
+  'c2': countryList[1]
+};
 
-
-  Widget _buildDialogItem(Country country) => Row(
-        children: <Widget>[
-          CountryPickerUtils.getDefaultFlagImage(country),
-          SizedBox(width: 8.0),
-          Text(country.short),
-          SizedBox(width: 8.0),
-          Flexible(child: Text(country.long))
-        ],
-      );
+Widget _buildDialogItem(Country country) => Row(
+      children: <Widget>[
+        CountryPickerUtils.getDefaultFlagImage(country),
+        SizedBox(width: 8.0),
+        Text(country.short),
+        SizedBox(width: 8.0),
+        Flexible(child: Text(country.long))
+      ],
+    );
 
 class Calculator extends StatefulWidget {
   @override
@@ -33,7 +35,7 @@ class _CalculatorState extends State<Calculator> {
   final TextEditingController inputController = TextEditingController();
   final valueStyle =
       TextStyle(color: Colors.white, fontWeight: FontWeight.w200, fontSize: 50);
-    Map<String, Country> selectedCountries = selectedCountriesShared;
+  Map<String, Country> selectedCountries = selectedCountriesShared;
   String c2 = "";
 
   int _value = 0;
@@ -41,7 +43,6 @@ class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
 
     final _appBar = AppBar(
       backgroundColor: Colors.teal,
@@ -55,18 +56,18 @@ class _CalculatorState extends State<Calculator> {
     final _cardShadow = <BoxShadow>[
       BoxShadow(
         color: Colors.black54,
-        blurRadius: 10.0, // has the effect of softening the shadow
-        spreadRadius: 0.2, // has the effect of extending the shadow
+        blurRadius: 5.0, // has the effect of softening the shadow
+        spreadRadius: 0.08, // has the effect of extending the shadow
         offset: Offset(
-          2.5, // horizontal, move right 10
-          2.5, // vertical, move down 10
+          1.5, // horizontal, move right 10
+          1.5, // vertical, move down 10
         ),
       )
     ];
 
     final _cardDeco = BoxDecoration(
       boxShadow: _cardShadow,
-      borderRadius: BorderRadius.all(Radius.circular(50)),
+      borderRadius: BorderRadius.all(Radius.circular(20)),
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -80,8 +81,8 @@ class _CalculatorState extends State<Calculator> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            padding: EdgeInsets.all(15),
+            margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+            padding: EdgeInsets.symmetric(vertical: 15),
             decoration: _cardDeco,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,9 +94,12 @@ class _CalculatorState extends State<Calculator> {
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.only(top: 30)),
-          _buildTimeScaleButtons(),
-          RatesChart(),
+          Column(
+            children: <Widget>[
+              _buildTimeScaleButtons(),
+              RatesChart(),
+            ],
+          )
         ],
       ),
     );
@@ -152,7 +156,8 @@ class _CalculatorState extends State<Calculator> {
         controller: inputController,
         onChanged: (String amnt) {
           // inputController.text = amnt;
-          double newa = calculateConverted(selectedCountries['c1'].short, selectedCountries['c2'].short, double.parse(amnt));
+          double newa = calculateConverted(selectedCountries['c1'].short,
+              selectedCountries['c2'].short, double.parse(amnt));
           setState(() {
             c2 = newa.toStringAsFixed(2);
           });
@@ -162,10 +167,14 @@ class _CalculatorState extends State<Calculator> {
           hintStyle: valueStyle.copyWith(color: Colors.white.withOpacity(0.80)),
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: Colors.transparent, width: 1.0, style: BorderStyle.solid)),
+                  color: Colors.transparent,
+                  width: 1.0,
+                  style: BorderStyle.solid)),
           enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: Colors.transparent, width: 1.0, style: BorderStyle.solid)),
+                  color: Colors.transparent,
+                  width: 1.0,
+                  style: BorderStyle.solid)),
         ),
         style: valueStyle,
       );
@@ -181,15 +190,18 @@ class _CalculatorState extends State<Calculator> {
                     child: CountryPickerDialog(
                         titlePadding: EdgeInsets.all(8.0),
                         searchCursorColor: Color(0xFF1CD0A2),
-                        searchInputDecoration: InputDecoration(hintText: 'Search...'),
+                        searchInputDecoration:
+                            InputDecoration(hintText: 'Search...'),
                         isSearchable: true,
                         title: Text('Select output currency'),
-                        onValuePicked: (Country country){
+                        onValuePicked: (Country country) {
                           selectedCountriesShared['c1'] = country;
                           setState(() {
                             selectedCountries = selectedCountriesShared;
                           });
-                          updateConversionRates(selectedCountriesShared['c1'].short, selectedCountriesShared['c2'].short);
+                          updateConversionRates(
+                              selectedCountriesShared['c1'].short,
+                              selectedCountriesShared['c2'].short);
                         },
                         itemBuilder: _buildDialogItem)),
               );
@@ -232,15 +244,18 @@ class _CalculatorState extends State<Calculator> {
                     child: CountryPickerDialog(
                         titlePadding: EdgeInsets.all(8.0),
                         searchCursorColor: Color(0xFF1CD0A2),
-                        searchInputDecoration: InputDecoration(hintText: 'Search...'),
+                        searchInputDecoration:
+                            InputDecoration(hintText: 'Search...'),
                         isSearchable: true,
                         title: Text('Select output currency'),
-                        onValuePicked: (Country country){
+                        onValuePicked: (Country country) {
                           selectedCountriesShared['c2'] = country;
                           setState(() {
                             selectedCountries = selectedCountriesShared;
                           });
-                          updateConversionRates(selectedCountriesShared['c1'].short, selectedCountriesShared['c2'].short);
+                          updateConversionRates(
+                              selectedCountriesShared['c1'].short,
+                              selectedCountriesShared['c2'].short);
                         },
                         itemBuilder: _buildDialogItem)),
               );

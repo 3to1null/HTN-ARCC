@@ -18,7 +18,7 @@ class _RatesChartState extends State<RatesChart> {
       child: Container(
         child: Padding(
           padding: const EdgeInsets.only(
-              right: 10.0, left: 0.0, top: 24, bottom: 12),
+              right: 20.0, left: 5.0, top: 24, bottom: 12),
           child: FlChart(
             chart: LineChart(
               LineChartData(
